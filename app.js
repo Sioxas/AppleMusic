@@ -25,6 +25,14 @@ App({
     }
   },
   globalData:{
-    userInfo:null
+    userInfo:null,
+    playing:null,
+    palyList:[{
+      docid: "9137272983103274516", 
+      id: "107192078", 
+      mid: "003OUlho2HcRHC", 
+      name: "告白气球", 
+      singer: "周杰伦"
+    }]
   }
 })

@@ -32,6 +32,26 @@ var pageObject = {
                     })
                 }
             })
+        },
+        play: function (event) {
+            var num=event.currentTarget.dataset.num
+            var res=this.data.searchRes.song.itemlist[num]
+            var appInstance = getApp()
+            appInstance.globalData.playing = res
+            // that.setData({
+            //     playBar:res,
+            //     playingSongsNum:event.currentTarget.dataset.num
+            // })
+            console.log('http://stream.qqmusic.tc.qq.com/'+res.id+'.mp3')
+            wx.playBackgroundAudio({
+                dataUrl: 'http://stream.qqmusic.tc.qq.com/'+res.id+'.mp3',
+                title: res.name,
+                singer: res.singer,
+                coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RMaRI1iFoYd.jpg',
+                complete: function (res) {
+                    
+                }
+            })
         }
 }
 

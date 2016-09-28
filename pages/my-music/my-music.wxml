@@ -6,8 +6,8 @@
                 
                 <image class="photo" src="{{item.coverImgUrl}}"></image>
                 
-                <text class="music-name">{{item.title}}</text>
-                <text class="music-author">{{item.author}}</text>
+                <text class="music-name">{{item.name}}</text>
+                <text class="music-author">{{item.singer}}</text>
             </view>
             
         </view>
@@ -34,7 +34,7 @@
     <view class="play-bar-image-container"> 
         <image class="play-bar-image" src="{{playBar.coverImgUrl}}" ></image>
     </view>
-    <text class="play-bar-text">{{playBar.title}}</text>
+    <text class="play-bar-text">{{playBar.name}}</text>
     <block wx:if="{{playing === false}}">
     <image class="play-bar-button" src="../../image/icon-play.png"   bindtap="play"  data-num="{{playingSongsNum}}"></image>
     </block>

@@ -2,40 +2,40 @@ var util = require('../../utils/util.js')
 var items = ['播放列表', '歌曲', '专辑', '演唱者']
 var _songsList=[{
       dataUrl:'http://stream.qqmusic.tc.qq.com/137192078.mp3',
-      title: '告白气球',
-      author:'周杰伦',
+      name: '告白气球',
+      singer:'周杰伦',
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RMaRI1iFoYd.jpg'
     },{
       dataUrl:'http://stream.qqmusic.tc.qq.com/138549169.mp3',
-      title: '你还要我怎样',
-      author:'薛之谦',
+      name: '你还要我怎样',
+      singer:'薛之谦',
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000000aWdOx24i3dG.jpg'
     },{
       dataUrl:'http://stream.qqmusic.tc.qq.com/137903929.mp3',
-      title: '微微一笑很倾城',
-      author:'杨洋',
+      name: '微微一笑很倾城',
+      singer:'杨洋',
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RxTdZ0sJLwo.jpg'
     },{
       dataUrl:'http://stream.qqmusic.tc.qq.com/132636799.mp3',
-      title: '演员',
-      author:'薛之谦',
+      name: '演员',
+      singer:'薛之谦',
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003y8dsH2wBHlo.jpg'
     }]
 var _albumList = [{
       name:'寂寞不痛',
-      author:'A-Lin',
+      singer:'A-Lin',
       image:'a-lin.png'
     },{
       name:'喜剧之王',
-      author:'李荣浩',
+      singer:'李荣浩',
       image:'ronghao-li.png'
     },{
       name:'I Know You Were Trouble.-Single',
-      author:'Taylor Swift',
+      singer:'Taylor Swift',
       image:'taylor-swift.png'
     },{
       name:'哎呦，不错哦',
-      author:'周杰伦',
+      singer:'周杰伦',
       image:'chou-jay.png'
     }]
 
@@ -49,8 +49,8 @@ var pageObject = {
     actionSheetItems: items,
     playBar:{
       dataUrl:'http://stream.qqmusic.tc.qq.com/137192078.mp3',
-      title: '告白气球',
-      author:'周杰伦',
+      name: '告白气球',
+      singer:'周杰伦',
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RMaRI1iFoYd.jpg'
     },
     songsList:_songsList,
@@ -87,7 +87,8 @@ var pageObject = {
     })
     wx.playBackgroundAudio({
       dataUrl: res.dataUrl,
-      title: res.title,
+      name: res.name,
+      singer:res.singer,
       coverImgUrl: res.coverImgUrl,
       complete: function (res) {
         that.setData({
@@ -124,6 +125,32 @@ var pageObject = {
   },
   onUnload: function () {
     clearInterval(this.updateInterval)
+  },
+  onShow:function(){
+    var that = this
+    if( typeof(that.data.playBar.coverImgUrl) == "undefined"){
+      wx.request({
+        url: 'http://120.27.93.97/weappserver/get_music.php',
+        data: {
+          mid: that.data.playBar.mid
+        },
+        header: {
+            'Content-Type': 'text/html;charset=utf-8'
+        },
+        success: function(res) {
+          console.log(res.data)
+          var obj=that.data.playBar
+          obj['coverImgUrl']=JSON.parse(res.data)
+          that.setData({
+            playBar:obj
+          })
+        }
+      })
+    }
+      that.setData({
+        playing: true,
+        playBar: getApp().globalData.playing
+      })
   }
 }
 
@@ -171,7 +198,7 @@ var pageObject = {
           console.log('click' + itemName, e)
           this.setData({
             musicGroupName:itemName,
-            listTemplateName:'author-list',
+            listTemplateName:'singer-list',
             templateData:null,
             actionSheetHidden: !this.data.actionSheetHidden
           })

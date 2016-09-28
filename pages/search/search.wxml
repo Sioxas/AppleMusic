@@ -6,12 +6,12 @@
         </view>
     </view>
     <view class="result">
-        <view class="result-group"  wx:if="{{searchRes.song!=null}}">
+        <view class="result-group"  wx:if="{{searchRes.song!=null}}" >
             <view class="group">
                 <image class="group-image"  src="../../image/icon-music.png"></image>
                 <text class="group-text" >单曲</text>
             </view>
-            <view class="result-item"  wx:for="{{searchRes.song.itemlist}}">
+            <view class="result-item"  wx:for="{{searchRes.song.itemlist}}" bindtap="play"  data-num="{{index}}">
                 <text class="result-title">{{item.name}}</text>
                 <text class="result-author">-{{item.singer}}</text>
             </view>
