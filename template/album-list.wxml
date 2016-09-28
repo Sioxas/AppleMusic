@@ -2,7 +2,7 @@
     <view class="big-photo-list">
             <view class="big-photo-item" wx:for="{{templateData}}">
                 
-                <image class="photo" src="../../image/album/{{item.image}}"></image>
+                <image class="photo" src="{{item.image}}"></image>
                 
                 <text class="music-name">{{item.name}}</text>
                 <text class="music-author">{{item.author}}</text>
