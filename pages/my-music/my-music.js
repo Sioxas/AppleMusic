@@ -51,6 +51,7 @@ var pageObject = {
       dataUrl:'http://stream.qqmusic.tc.qq.com/137192078.mp3',
       name: '告白气球',
       singer:'周杰伦',
+      id:137192078,
       coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R90x90M000003RMaRI1iFoYd.jpg'
     },
     songsList:_songsList,
@@ -128,11 +129,11 @@ var pageObject = {
   },
   onShow:function(){
     var that = this
-    if( typeof(that.data.playBar.coverImgUrl) == "undefined"){
+    
       wx.request({
         url: 'http://120.27.93.97/weappserver/get_music.php',
         data: {
-          mid: that.data.playBar.mid
+          mid: getApp().globalData.playing.mid
         },
         header: {
             'Content-Type': 'text/html;charset=utf-8'
@@ -140,13 +141,12 @@ var pageObject = {
         success: function(res) {
           console.log(res.data)
           var obj=that.data.playBar
-          obj['coverImgUrl']=JSON.parse(res.data)
+          obj['coverImgUrl']='http:'+res.data
           that.setData({
             playBar:obj
           })
         }
       })
-    }
       that.setData({
         playing: true,
         playBar: getApp().globalData.playing
